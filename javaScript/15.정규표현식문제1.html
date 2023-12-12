@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>정규표현식 문제1</title>
+</head>
+<body>
+	<form action="01.개요.html">
+		아이디 : <input name="userId" id="userId"><br>
+		비밀번호 : <input type="password" name="userPwd" id="userPwd"> <br>
+		비밀번호 확인 : <input type="password" name="userRePwd" id="RePwd"><br>
+		<input type="submit" onclick="return validate();">
+	</form>
+
+	<script>
+		function validate() {
+			// 아이디 : 영문자또는 숫자로만 5글자 이상 12글자 이하
+			var userId = document.getElementById('userId').value;
+			var userIdRegex = /^[a-zA-Z0-9]{5,12}$/;
+			if (!userIdRegex.test(userId)) {
+					alert('아이디는 영문자 또는 숫자로만 5글자 이상 12글자 이하이어야 합니다.');
+					return false;
+			}
+			// 비밀번호 : 영문자또는 숫자로 시작하고 중간에는 모든글자 가능 9글자 이상 20글자 미만
+			var userPwd = document.getElementById('userPwd').value;
+			var userPwdRegex = /^[a-zA-Z0-9].{7,19}$/;
+			if (!userPwdRegex.test(userPwd)) {
+					alert('비밀번호는 영문자 또는 숫자로 시작하고 중간에는 모든 글자가 가능하며, 9글자 이상 20글자 미만이어야 합니다.');
+					return false;
+			}
+
+			// 비밀번호 = 비밀번호 확인 같은지 체크
+			var userRePwd = document.getElementById('RePwd').value;
+			if (userPwd !== userRePwd) {
+					alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+					return false;
+			}
+
+        return true;
+    }
+	</script>
+	
+</body>
+</html>

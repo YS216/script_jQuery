@@ -91,7 +91,7 @@
   <button id="btn4">이벤트 속성에 핸들러 바인딩</button>
   <button id="btn5">addEventListener 방식</button>
   <button onclick="test2();">인라인방식</button>
-  <button onclick="test2(this);">인라인방식2</button>
+  <button onclick="test3(this);">인라인방식2</button>
 
   <script>
     // 기본이벤트 방식
@@ -109,6 +109,78 @@
       e.target.innerHTML = "버튼클릭됨";
       window.event.target.style.backgroundColor = "red";
       this.style.color = "white";
+    }
+
+    // * addEventListener 방식
+    document.getElementById("btn5").addEventListener("click", function(e) {
+      console.log(e.target);
+      console.log(window.evvent.target);
+      console.log(this)
+    });
+
+    // * 인라인 방식
+    function test2(e) {
+      // console.log(e.target); // 호출시 매개변수를 전달하지 않아서 사용 불가
+      console.log(window.event.target); // 사용 가능
+      console.log(this); // window객체를 가리킴
+
+      window.event.target.innerHtml = "버튼 변경";
+    }
+
+    // * 인라인 방식 매개변수 전달
+    function test3(ev) {
+      console.log(ev.target);
+      console.log(window.event.target);
+      console.log(this);
+
+      ev.style.backgroundColor = "red";
+    }
+  </script>
+
+  <hr>
+
+  <h3>3. 태그별로 기본적으로 가지고 있는 이벤트 제거</h3>
+  <p>
+    기본적으로 이벤트를 가지고 있는 요소<br>
+    - a 태그 : 클릭시 href에 있는 값(url)으로 링크가 들어있음<br>
+    - submit 버튼 : form의 action속성에 있는 값(url)으로 링크가 들어있음 <br><br>
+
+    태그 내에 기본적으로 설정되어 있는 이벤트가 실행되지 않게 하고싶을 때 <br>
+    => 이벤트 핸들러의 return값을 false로 하면 기본 이벤트가 실행 안됨
+  </p>
+
+  <!-- 기본 이벤트보다 다른 이벤트가 우선순위가 더 높음 -->
+  <!-- <a href="https://www.naver.com" onclick="alert('이벤트 작성');">네이버로 이동</a> -->
+  <a href="https://www.naver.com" onclick="alert('이벤트 작성'); return false;">네이버로 이동</a>
+
+  <br>
+
+  <a href="https://google.com" onclick="return test4();">구글로 이동</a>
+  <script>
+    function test4() {
+      alert('알림창');
+      return false;
+    }
+  </script>
+
+  <br><br>
+
+  <form action="12.window객체.html">
+    아이디 : <input name="userId" id="userId"><br>
+    비밀번호 : <input type="password" name="userPw" id="userPw"><br>
+    비밀번호 확인 : <input type="password" name="userRePw" id="userRePw"><br>
+    <input type="submit" onclick="return validate();"><br>
+
+  </form>
+  <script>
+    function validate() {
+      const userPw = document.getElementById("userPw").value;
+      const userRePw = document.getElementById("userRePw").value;
+
+      if(userPw != userRePw) {
+        alert("비밀번호 불일치");
+        return false;
+      }
     }
   </script>
 
